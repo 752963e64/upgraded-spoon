@@ -12,6 +12,20 @@ One of those is set to be the best...
 
 let's hack...
 
+### All the paths goes to roma
+
+- SHM locking and sqlite3
+
+- SHM locking and SHM JSON
+
+- SHM locking and SHM lua table
+
+- FIFO PIPE
+
+- unpolled sock maybe
+
+- file ondisk? :D tmpfs maybe? :)
+
 ## Q/A
 
 - What's an applicative firewall?

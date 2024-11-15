@@ -108,7 +108,7 @@ function OnHttpRequest()
     )
 
     if rid == nil then
-      raddr = tostring(raddr)
+      raddr = tostring(raddr) -- stringify integer for an associative array field. for lazy access.
       Log(kLogInfo, '\e[01;36msession limit has been reached for %d\e[0m' % {raddr})
       errmsg[raddr] = '# session limit has been reached for %d;\n' % {raddr}
       errmsg[raddr] = errmsg[raddr]..'# Try back in a moment and if problem persist send us a mail with "SESSION[%d]" as object. Thanks' % {raddr}

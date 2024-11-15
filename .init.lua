@@ -11,14 +11,16 @@ ProgramBrand('redbean/x.x.x')
 -- ProgramAddr('127.0.0.1')
 
 opts = {
-  HOSTNAME = 'localhost',
+  SESSION_DOMAIN = 'localhost',
   SESSION_TIME = 60, -- seconds
   SESSION_ID = 'ctx_session',
   SESSION_PATH = {
     ROOT = '/',
     APP = '/app',
     POST = '/catch'
-  }
+  },
+  SESSION_SECURE = true,
+  SESSION_HTTP = true
 }
 
 errmsg = {}
@@ -63,23 +65,23 @@ end
 
 function OnHttpRequest()
   print('\e[01;36mOnHttpRequest()...\e[0m')
-  if GetHost() ~= opts.HOSTNAME then
+  if GetHost() ~= opts.SESSION_DOMAIN then
     ServeError(404)
     return
   end
 
   local session_ctx = nil
   local useragent = re.compile('^Mozilla/5.0[a-zA-Z0-9()/._;, ]{8,255}$'):search(GetHeader('User-Agent'))
-  local clientaddr = GetClientAddr()
+  local raddr = GetClientAddr()
 
   if useragent then
     Log(kLogInfo, "client %d trusted:%s is running %s and reports %s looking to %s" % {
-      clientaddr,IsTrustedIp(clientaddr),
+      raddr,IsTrustedIp(raddr),
       fingeros, useragent, GetPath()
       })
   else
-    Log(kLogInfo, '\e[01;36mWeb browser doesn\'t qualify for %d\e[0m' % {clientaddr})
-    errmsg[tostring(clientaddr)] = '# Your web browser doesn\'t qualify to access our services.'
+    Log(kLogInfo, '\e[01;36mWeb browser doesn\'t qualify for %d\e[0m' % {raddr})
+    errmsg[tostring(raddr)] = '# Your web browser doesn\'t qualify to access our services.'
     ServeError(403)
     return
   end
@@ -91,25 +93,25 @@ function OnHttpRequest()
   if session_ctx and session_ctx ~= '' then
     print('path:%s %s:%s' % { GetPath() ,opts.SESSION_ID, session_ctx })
     -- trying to trick session db?
-    if not db:reset_lastseen(clientaddr, session_ctx, useragent) then
+    if not db:reset_lastseen(raddr, session_ctx, useragent) then
       ServeError(400)
       return
     end
     -- route somewhere wonderful...
   else
-    session_ctx = bin2Hex(Sha256(''..clientaddr..Lemur64()..GetTime()))
+    session_ctx = bin2Hex(Sha256(''..raddr..Lemur64()..GetTime()))
     local rid = db:add_session(
-      clientaddr,
+      raddr,
       useragent,
       fingeros,
       session_ctx
     )
 
     if rid == nil then
-      clientaddr = tostring(clientaddr)
-      Log(kLogInfo, '\e[01;36msession limit has been reached for %d\e[0m' % {clientaddr})
-      errmsg[clientaddr] = '# session limit has been reached for %d;\n' % {clientaddr}
-      errmsg[clientaddr] = errmsg[clientaddr]..'# Try back in a moment and if problem persist send us a mail with "SESSION[%d]" as object. Thanks' % {clientaddr}
+      raddr = tostring(raddr)
+      Log(kLogInfo, '\e[01;36msession limit has been reached for %d\e[0m' % {raddr})
+      errmsg[raddr] = '# session limit has been reached for %d;\n' % {raddr}
+      errmsg[raddr] = errmsg[raddr]..'# Try back in a moment and if problem persist send us a mail with "SESSION[%d]" as object. Thanks' % {raddr}
       ServeError(403)
       return
     end
@@ -120,9 +122,9 @@ function OnHttpRequest()
       {
         maxage = opts.SESSION_TIME,
         path = opts.SESSION_PATH.ROOT,
-        domain = opts.HOSTNAME,
-        secure = true,
-        httponly = true
+        domain = opts.SESSION_DOMAIN,
+        secure = opts.SESSION_SECURE,
+        httponly = opts.SESSION_HTTP
       }
     )
   end
@@ -163,8 +165,8 @@ function OnLogLatency(reqtimeus,contimeus)
 end
 
 function OnError(status,message)
-  local clientaddr = tostring(GetClientAddr())
-  print('\e[01;36mOnError(status:'.. status ..', message:'.. message ..') to:%s...\e[0m' % { clientaddr } )
+  local raddr = tostring(GetClientAddr())
+  print('\e[01;36mOnError(status:'.. status ..', message:'.. message ..') to:%s...\e[0m' % { raddr } )
   SetStatus(status)
   SetHeader('Connection', 'close')
   Write([[<!doctype html>]])
@@ -177,8 +179,8 @@ function OnError(status,message)
   Write([[<h1>]])
   Write("%d %s" %{ status, message })
   Write([[</h1>]])
-  if errmsg[clientaddr] ~= nil then
-    Write("<p><small>%s</small></p>" %{ errmsg[clientaddr] })
-    errmsg[clientaddr] = nil
+  if errmsg[raddr] ~= nil then
+    Write("<p><small>%s</small></p>" %{ errmsg[raddr] })
+    errmsg[raddr] = nil
   end
 end

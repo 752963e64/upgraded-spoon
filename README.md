@@ -26,6 +26,10 @@ let's hack...
 
 - file ondisk? :D tmpfs maybe? :)
 
+### And the last idea that decimates all the previous one a like it's useless...
+
+I'll just hardcode cookie handling from the inner with C, no need struggle that much finally...
+
 ## Q/A
 
 - What's an applicative firewall?

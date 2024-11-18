@@ -1,5 +1,5 @@
 -- Session.lua
-local shmlock = require "shmlock"
+local shmlock = require "Shmlock"
 
 Session = {}
 

@@ -70,7 +70,7 @@ function OnHttpRequest()
   
   errmsg = nil
   session_ctx = nil
-  useragent = re.compile('^Mozilla/5.0[a-zA-Z0-9()/._;, ]{8,255}$'):search(GetHeader('User-Agent'))
+  useragent = re.compile('^Mozilla/5.0[a-zA-Z0-9()/._;:, ]{8,255}$'):search(GetHeader('User-Agent'))
   raddr = GetClientAddr()
 
   if useragent then

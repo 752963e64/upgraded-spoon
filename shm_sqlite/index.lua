@@ -1,6 +1,6 @@
 -- index.lua
 
-local answer = false
+answer = false
 
 if db then answer = true end
 
@@ -10,3 +10,10 @@ if look then
 end
 
 print('\e[01;31mYay output with goodies...\e[0m', look, answer, opts.SESSION_DOMAIN)
+
+Write('<h1>Hello, World<h2>cookie: ')
+if look ~= nil then
+  Write(look)
+else
+  Write('no cookie :/')
+end

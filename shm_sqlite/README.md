@@ -22,7 +22,4 @@ This reduces undefined behavior in your applicable limits...
 
 ###### Timestamp
 
-'''
--- shm_sqlite
--- author: 752963e64 - 14/11/2024
-'''
+'''author: 752963e64 - 14/11/2024'''

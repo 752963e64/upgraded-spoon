@@ -1,40 +1,20 @@
 # upgraded-spoon
-This repo contain an applicative firewall made up stored session(cookie) around the latest redbean.
+This repo contain R&amp;D around latest redbean.
 
-## To every serious project needs serious definitions.
-This project aim to be a reference in session handling with the latest redbean.
+## workdirs
 
-Technically we have many options to achieve the same goal.
+- ./shm_sqlite
 
-I will dive into strategies & methods to hopefully achieve the goal.
+```exploring session storage, limit and security handling```
 
-One of those is set to be the best...
+- ./local_git
 
-let's hack...
+```exploring local git repo aggregation in a web browser```
 
-### All the paths goes to roma
-
-- SHM locking and sqlite3
-
-- SHM locking and SHM JSON
-
-- SHM locking and SHM lua table
-
-- FIFO PIPE
-
-- unpolled sock maybe
-
-- file ondisk? :D tmpfs maybe? :)
-
-### And the last idea that decimates all the previous one a like it's useless...
-
-I'll just hardcode cookie handling from the inner with C, no need struggle that much finally...
+...
 
 ## Q/A
 
-- What's an applicative firewall?
+- What's R&amp;D?
 
-An applicative firewall handles an entrypoint to let say an userland where anything that happens is authenticated...
-
-This reduces undefined behavior in your applicable limits...
-
+scraping to end with something else a chimera.

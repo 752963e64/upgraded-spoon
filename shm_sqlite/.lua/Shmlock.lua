@@ -18,8 +18,8 @@ function Shmlock:new(debug)
   return o
 end
 
--- object:aquire()
-function Shmlock:aquire()
+-- object:acquire()
+function Shmlock:acquire()
   local ok, old = self.shm:cmpxchg(self.SHM_LOCK, 0, 1)
   if self.DEBUG then
     Log(kLogInfo, 

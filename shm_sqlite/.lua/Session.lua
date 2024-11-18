@@ -42,7 +42,7 @@ end
 -- object:create()
 -- @object
 function Session:create()
-  self.lock:aquire()
+  self.lock:acquire()
 
   self.db:busy_timeout(1000)
   self.db:exec[=[
@@ -117,7 +117,7 @@ Session:add_session(addr, useragent, os, session)
 @bool - if query succeeded.
 ]]
 function Session:add_session(addr, useragent, os, session)
-  self.lock:aquire()
+  self.lock:acquire()
   if not self.insert_session then
     Log(kLogInfo, "sqlite prepare .insert_session failed: %s" % { self.db:errmsg() })
     self.lock:release()

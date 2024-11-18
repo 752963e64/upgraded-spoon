@@ -7,6 +7,10 @@ This repo contain R&amp;D around latest redbean.
 
 ```exploring session storage, limit and security handling```
 
+- ./reverse_proxy
+
+```exploring reverse proxy capabilities```
+
 - ./local_git
 
 ```exploring local git repo aggregation in a web browser```

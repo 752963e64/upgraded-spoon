@@ -13,3 +13,7 @@ This repo contain an reverse proxy using the latest redbean.
 - What's a reverse proxy?
 
 A reverse proxy is a relay between you and a remote host. It can be static or dynamic and may tamper data.
+
+###### Timestamp
+
+```author: 752963e64 - 18/11/2024```

@@ -1,4 +1,5 @@
--- index.lua
+-- shm_sqlite index.lua
+-- author: 752963e64 - 14/11/2024
 
 answer = false
 

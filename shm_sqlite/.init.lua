@@ -1,14 +1,14 @@
--- .init.lua
+-- shm_sqlite .init.lua
+-- author: 752963e64 - 14/11/2024
+
 session = require "Session"
--- ddos protection
--- ProgramTokenBucket()
 
 HidePath('/usr/')
 HidePath('/.lua/')
 
 ProgramBrand('redbean/x.x.x')
 
--- ProgramAddr('127.0.0.1')
+ProgramAddr('127.0.0.1')
 
 opts = {
   SESSION_DOMAIN = 'localhost',

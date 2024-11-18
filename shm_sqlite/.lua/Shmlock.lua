@@ -1,4 +1,6 @@
--- Shmlock.lua
+-- shm_sqlite Shmlock.lua
+-- author: 752963e64 - 14/11/2024
+
 -- inspired from redbean.dev
 local Shmlock = {}
 

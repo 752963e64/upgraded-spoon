@@ -1,4 +1,6 @@
--- Session.lua
+-- shm_sqlite Session.lua
+-- author: 752963e64 - 14/11/2024
+
 local shmlock = require "Shmlock"
 
 Session = {}

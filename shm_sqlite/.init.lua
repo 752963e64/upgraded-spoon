@@ -1,5 +1,5 @@
 -- .init.lua
-local session = require "Session"
+session = require "Session"
 -- ddos protection
 -- ProgramTokenBucket()
 
@@ -23,12 +23,10 @@ opts = {
   SESSION_HTTP = true
 }
 
-errmsg = {}
-
 db = session:new(require "lsqlite3")
 
 function bin2Hex(bin)
-  local hexstr = ""
+  hexstr = ""
   if bin ~= '' and type(bin) == 'string' then
     for l=#bin,1,-1 do
       hexstr = "%.2x" % {string.byte( string.sub(bin, l) )} .. hexstr
@@ -45,7 +43,7 @@ function OnServerListen(fd, ip, port)
   print('\e[01;36mOnServerListen(%d, %d, %d)...\e[0m' %
     { fd, ip, port }
   )
-  local syn, synerr = unix.setsockopt(fd, unix.SOL_TCP, unix.TCP_SAVE_SYN, true)
+  syn, synerr = unix.setsockopt(fd, unix.SOL_TCP, unix.TCP_SAVE_SYN, true)
   if not syn then
     Log(kLogInfo, "setsockopt crashed with %d" % { synerr })
   end
@@ -56,7 +54,7 @@ function OnClientConnection(ip, port, serverip, serverport)
   print('\e[01;36mOnClientConnection(ip:%s port:%s serverip:%s serverport:%s\e[0m' %
     { ip, port, serverip, serverport }
   )
-  local syn, synerr = unix.getsockopt(GetClientFd(), unix.SOL_TCP, unix.TCP_SAVED_SYN)
+  syn, synerr = unix.getsockopt(GetClientFd(), unix.SOL_TCP, unix.TCP_SAVED_SYN)
   fingeros = finger.GetSynFingerOs(finger.FingerSyn(syn))
   if not syn then
     Log(kLogInfo, "getsockopt crashed with %d" % { synerr })
@@ -69,10 +67,10 @@ function OnHttpRequest()
     ServeError(404)
     return
   end
-
-  local session_ctx = nil
-  local useragent = re.compile('^Mozilla/5.0[a-zA-Z0-9()/._;, ]{8,255}$'):search(GetHeader('User-Agent'))
-  local raddr = GetClientAddr()
+  errmsg = nil
+  session_ctx = nil
+  useragent = re.compile('^Mozilla/5.0[a-zA-Z0-9()/._;, ]{8,255}$'):search(GetHeader('User-Agent'))
+  raddr = GetClientAddr()
 
   if useragent then
     Log(kLogInfo, "client %d trusted:%s is running %s and reports %s looking to %s" % {
@@ -92,7 +90,8 @@ function OnHttpRequest()
 
   if session_ctx and session_ctx ~= '' then
     print('path:%s %s:%s' % { GetPath() ,opts.SESSION_ID, session_ctx })
-    -- trying to trick session db?
+    -- route design asset before session and return.
+    -- authenticate only the information and values.
     if not db:reset_lastseen(raddr, session_ctx, useragent) then
       ServeError(400)
       return
@@ -108,10 +107,9 @@ function OnHttpRequest()
     )
 
     if rid == nil then
-      raddr = tostring(raddr) -- stringify integer for an associative array field. for lazy access.
       Log(kLogInfo, '\e[01;36msession limit has been reached for %d\e[0m' % {raddr})
-      errmsg[raddr] = '# session limit has been reached for %d;\n' % {raddr}
-      errmsg[raddr] = errmsg[raddr]..'# Try back in a moment and if problem persist send us a mail with "SESSION[%d]" as object. Thanks' % {raddr}
+      errmsg = '# session limit has been reached for %d;\n' % {raddr}
+      errmsg = errmsg..'# Try back in a moment and if problem persist send us a mail with "SESSION[%d]" as object. Thanks' % {raddr}
       ServeError(403)
       return
     end
@@ -165,7 +163,6 @@ function OnLogLatency(reqtimeus,contimeus)
 end
 
 function OnError(status,message)
-  local raddr = tostring(GetClientAddr())
   print('\e[01;36mOnError(status:'.. status ..', message:'.. message ..') to:%s...\e[0m' % { raddr } )
   SetStatus(status)
   SetHeader('Connection', 'close')
@@ -179,8 +176,8 @@ function OnError(status,message)
   Write([[<h1>]])
   Write("%d %s" %{ status, message })
   Write([[</h1>]])
-  if errmsg[raddr] ~= nil then
-    Write("<p><small>%s</small></p>" %{ errmsg[raddr] })
-    errmsg[raddr] = nil
+  if errmsg ~= nil then
+    Write("<p><small>%s</small></p>" %{ errmsg })
+    errmsg = nil
   end
 end

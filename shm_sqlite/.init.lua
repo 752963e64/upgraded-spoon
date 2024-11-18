@@ -67,6 +67,7 @@ function OnHttpRequest()
     ServeError(404)
     return
   end
+  
   errmsg = nil
   session_ctx = nil
   useragent = re.compile('^Mozilla/5.0[a-zA-Z0-9()/._;, ]{8,255}$'):search(GetHeader('User-Agent'))
@@ -79,7 +80,7 @@ function OnHttpRequest()
       })
   else
     Log(kLogInfo, '\e[01;36mWeb browser doesn\'t qualify for %d\e[0m' % {raddr})
-    errmsg[tostring(raddr)] = '# Your web browser doesn\'t qualify to access our services.'
+    errmsg = '# Your web browser doesn\'t qualify to access our services.'
     ServeError(403)
     return
   end

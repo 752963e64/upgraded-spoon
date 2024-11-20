@@ -22,3 +22,6 @@ This repo contain R&amp;D around latest redbean.
 - What's R&amp;D?
 
 scraping to end with something else a chimera.
+
+![spoon HoneyBadger](./rzh-ts.asc.png)
+

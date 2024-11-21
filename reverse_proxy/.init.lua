@@ -62,11 +62,12 @@ function OnHttpRequest()
       SetHeader(v, headers[v])
     end
     Write(body)
-  else
-    local err = headers
-    Log(kLogError, "proxy failed %s" % {err})
-    ServeError(503)
+    return
   end
+  
+  local err = headers
+  Log(kLogError, "proxy failed %s" % {err})
+  ServeError(503)
 end
 
 function OnWorkerStart()

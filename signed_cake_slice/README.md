@@ -10,6 +10,12 @@ This repo contain an signed session handling thru cookies and curve25519 around 
 
 - session handling, session security
 
+## Facing problem
+
+- unlimited... old keypair sessions are not invalidated...
+
+- this still require storage somewhere to be consistent with the logic of access control...
+
 ## Q/A
 
 - What's a curve25519?

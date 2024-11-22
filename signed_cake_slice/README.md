@@ -1,25 +1,21 @@
-# upgraded-spoon/shm_sqlite
+# upgraded-spoon/signed_cake_slice
 
-This repo contain an applicative firewall made up stored session(cookie) around the latest redbean.
+This repo contain an signed session handling thru cookies and curve25519 around the latest redbean.
 
 ## Demonstrate.
 
-- SHM locking and sqlite3
+- keys pairs handling with curve25519
 
-- session storage
+- signed session with no ambiguity that match one client.
 
-- session limit
-
-- session security
+- session handling, session security
 
 ## Q/A
 
-- What's an applicative firewall?
+- What's a curve25519?
 
-An applicative firewall handles an entrypoint to let say an userland where anything that happens is authenticated...
-
-This reduces undefined behavior in your applicable limits...
+[https://en.wikipedia.org/wiki/Curve25519](https://en.wikipedia.org/wiki/Curve25519)
 
 ###### Timestamp
 
-```author: 752963e64 - 14/11/2024```
+```author: 752963e64 - 22/11/2024```

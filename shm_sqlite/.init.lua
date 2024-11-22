@@ -37,20 +37,6 @@ opts = {
 
 db = session:new(require "lsqlite3")
 
-function bin2Hex(bin)
-  hexstr = ""
-  if bin ~= '' and type(bin) == 'string' then
-    for l=#bin,1,-1 do
-      hexstr = "%.2x" % {string.byte( string.sub(bin, l) )} .. hexstr
-    end
-  end
-  if hexstr ~= "" then
-    return hexstr
-  else
-    return nil
-  end
-end
-
 function OnServerListen(fd, ip, port)
   print('\e[01;36mOnServerListen(%d, %d, %d)...\e[0m' %
     { fd, ip, port }

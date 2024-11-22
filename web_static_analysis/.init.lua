@@ -1,21 +1,28 @@
--- web static analysis .init.lua
+-- web_static_analysis .init.lua
 -- author: 752963e64 - 22/11/2024
+
+require 'opts'
+
+if type(opts) == 'table' then
+  -- loads config
+  opts['SERVER_ADDR'] = '127.0.0.1'
+  opts['SERVER_BRAND'] = 'redbean/x.x.x'
+else
+  Log(kLogError, 'missing opts config table...')
+end
 
 HidePath('/usr/')
 HidePath('/.lua/')
 
 -- rebranding for the show.
-ProgramBrand('reverse_beam/x.x.x')
+ProgramBrand(opts.SERVER_BRAND)
 
 -- ProgramSslFetchVerify(false)
 
 -- doesn't transmit SNI when performing fetch request.
 EvadeDragnetSurveillance(true)
 
--- Proxy server listening here
-SERVER_ADDR = '127.0.0.1'
-
-ProgramAddr(SERVER_ADDR)
+ProgramAddr(opts.SERVER_ADDR)
 
 RELAY_HEADERS_TO_CLIENT = {
   'Access-Control-Allow-Origin',
@@ -81,7 +88,7 @@ function OnHttpRequest()
           headers = {
             ['DNT'] = '1',
             ['Accept'] = GetHeader('Accept'),
-            ['Host'] = GetHost(),
+            ['Host'] = GetHost(), -- dont send localhost maybe :D
             -- ['Referer'] = GetHeader('Referer'),
             ['If-Modified-Since'] = GetHeader('If-Modified-Since'),
             ['Sec-CH-UA-Platform'] = GetHeader('Sec-CH-UA-Platform'),

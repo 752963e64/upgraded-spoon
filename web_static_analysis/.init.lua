@@ -52,6 +52,12 @@ hr { width:30%; }
 form = [=[<div id="container"><form action="/" method="get">
 <label for="url">URL:</label><br>
 <input type="text" id="url" name="url" value="https://..."><br>
+<input type="checkbox" id="hdr" name="hdr" value="true">
+<label for="hdr"> header</label>
+<input type="checkbox" id="bdy" name="bdy" value="true">
+<label for="bdy"> body</label>
+<input type="checkbox" id="json" name="json" value="true">
+<label for="json"> json</label>
 <input type="submit" value="Submit">
 </form></div>]=]
 
@@ -76,15 +82,16 @@ function OnHttpRequest()
             ['DNT'] = '1',
             ['Accept'] = GetHeader('Accept'),
             ['Host'] = GetHost(),
-            ['Referer'] = GetHeader('Referer'),
+            -- ['Referer'] = GetHeader('Referer'),
             ['If-Modified-Since'] = GetHeader('If-Modified-Since'),
             ['Sec-CH-UA-Platform'] = GetHeader('Sec-CH-UA-Platform'),
             ['User-Agent'] = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/113.0',
-            ['X-Forwarded-For'] = FormatIp(GetClientAddr())}})
+            --  ['X-Forwarded-For'] = FormatIp(GetClientAddr())
+          }})
     if status then
       -- reply
       Write('<br><label for="header">HEADER:</label><br><pre id="header">')
-      Write('Status: '..status..' '..GetHttpReason(status))
+      Write('Status: '..status..' '..GetHttpReason(status)..'\n')
       for i, v in pairs(headers) do
         Write('"'..VisualizeControlCodes(i)..'": "'..VisualizeControlCodes(v)..'"\n')
       end

@@ -1,58 +1,24 @@
 -- signed_cake_slice .init.lua
 -- author: 752963e64 - 22/11/2024
 
+require 'opts'
+
+if type(opts) == 'table' then
+  -- loads config
+  opts['SERVER_ADDR'] = '127.0.0.1'
+else
+  Log(kLogError, 'missing opts config table...')
+end
+
+require 'strtools'
+require 'session'
+
 HidePath('/usr/')
 HidePath('/.lua/')
 
 ProgramBrand('redbean/x.x.x')
 
-ProgramAddr('127.0.0.1')
-
-opts = {}
-opts['SESSION_DOMAIN'] = 'localhost'
-opts['SESSION_TIME'] = 60 -- seconds
-opts['SESSION_ID'] = 'ctx_session'
-opts['SESSION_SKEY'] = 'skey_session'
-opts['SESSION_PATH'] = {
-    ROOT = '/',
-    APP = '/app',
-    POST = '/catch'
-  }
-opts['SESSION_SECURE'] = true
-opts['SESSION_HTTP'] = true
-opts['SESSION_SS'] = 'Strict'
-opts['SESSION_SECRET'] = GetRandomBytes(64)
-opts['SESSION_PASSPHRASE'] = 'curvy dead alive'
-opts['SESSION_PUBLIC_KEY'] = Curve25519(opts.SESSION_SECRET, opts.SESSION_PASSPHRASE)
-
-function bin2Hex(bin)
-  hexstr = ""
-  if bin ~= '' and type(bin) == 'string' then
-    for l=#bin,1,-1 do
-      hexstr = "%.2x" % {string.byte( string.sub(bin, l) )} .. hexstr
-    end
-  end
-  if hexstr ~= "" then
-    return hexstr
-  else
-    return nil
-  end
-end
-
-function SendCookie(id, value)
-  SetCookie(
-    id,
-    value,
-    {
-      maxage = opts.SESSION_TIME,
-      path = opts.SESSION_PATH.ROOT,
-      domain = opts.SESSION_DOMAIN,
-      secure = opts.SESSION_SECURE,
-      httponly = opts.SESSION_HTTP,
-      samesite = opts.SESSION_SS
-    }
-  )
-end
+ProgramAddr(opts.SERVER_ADDR)
 
 function OnServerListen(fd, ip, port)
   print('\e[01;36mOnServerListen(%d, %d, %d)...\e[0m' %
@@ -67,12 +33,14 @@ end
 
 function OnHttpRequest()
   print('\e[01;36mOnHttpRequest()...\e[0m')
+  errmsg = nil
+
   if GetHost() ~= opts.SESSION_DOMAIN then
     ServeError(404)
+    errmsg = 'Your webbrowser misbehaving with domain...'
     return
   end
 
-  errmsg = nil
 
   if GetCookie(opts.SESSION_ID) and GetCookie(opts.SESSION_SKEY) then
     session_ctx = re.compile[[^[0-9a-f]{64}$]]:search(GetCookie(opts.SESSION_ID))
@@ -83,14 +51,15 @@ function OnHttpRequest()
     else
       errmsg = 'Your webbrowser misbehaving with cookies...'
       ServeError(403)
+      return
     end
   else
     -- craft session
     session_ctx = bin2Hex(Sha256(''..GetClientAddr()..Lemur64()..GetTime()))
     session_pubkey = Curve25519(session_ctx, opts.SESSION_PASSPHRASE)
     session_shared_key = Curve25519(opts.SESSION_SECRET, session_pubkey)
-    SendCookie(opts.SESSION_ID, session_ctx)
-    SendCookie(opts.SESSION_SKEY, bin2Hex(session_shared_key))
+    SendSession(opts.SESSION_ID, session_ctx)
+    SendSession(opts.SESSION_SKEY, bin2Hex(session_shared_key))
   end
 
   Route()

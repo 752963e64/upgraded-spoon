@@ -25,7 +25,7 @@ This repo contain R&amp;D around latest redbean.
 
 - ./signed_cake_slice
 
-```demo signed session with a cookie combo```
+```demo signed session with a cookie combo or 2 cake slices?```
 
 ...
 

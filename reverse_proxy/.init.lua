@@ -1,17 +1,26 @@
 -- reverse proxy .init.lua
 -- author: 752963e64 - 18/11/2024
 
+require 'opts'
+
+if type(opts) == 'table' then
+  -- loads config
+  opts['SERVER_ADDR'] = '6.6.6.0'
+  opts['REVERSE_ADDR'] = '127.0.0.1:8080'
+  opts['SERVER_BRAND'] = 'redbean/x.x.x'
+else
+  Log(kLogError, 'missing opts config table...')
+end
+
 HidePath('/usr/')
 HidePath('/.lua/')
 
 -- rebranding for the show.
-ProgramBrand('reverse_beam/x.x.x')
+ProgramBrand(opts.SERVER_BRAND)
 
 -- Proxy server listening here
-FRONTEND = '6.6.6.6'
-ProgramAddr(FRONTEND)
+ProgramAddr(opts.SERVER_ADDR)
 -- we'll be reverse proxying to a server running here
-BACKEND = '127.0.0.1:8080'
 
 RELAY_HEADERS_TO_CLIENT = {
   'Access-Control-Allow-Origin',
@@ -26,7 +35,7 @@ function OnHttpRequest()
   print('\e[01;36mOnHttpRequest()...\e[0m')
 
   print('\e[01;33mGetParams\e[0m')
-  local url = 'https://' .. BACKEND .. EscapePath(GetPath())
+  local url = 'https://' .. opts.REVERSE_ADDR .. EscapePath(GetPath())
   local rparams = GetParams()
   if #rparams > 0 then
     url = url .. '?'

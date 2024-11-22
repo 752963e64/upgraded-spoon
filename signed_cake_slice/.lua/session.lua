@@ -36,3 +36,7 @@ function SendSession(id, value)
     }
   )
 end
+
+function GetSession(id)
+  return GetCookie(id)
+end

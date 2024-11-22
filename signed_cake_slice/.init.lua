@@ -6,6 +6,7 @@ require 'opts'
 if type(opts) == 'table' then
   -- loads config
   opts['SERVER_ADDR'] = '127.0.0.1'
+  opts['SERVER_BRAND'] = 'redbean/x.x.x'
 else
   Log(kLogError, 'missing opts config table...')
 end
@@ -16,7 +17,7 @@ require 'session'
 HidePath('/usr/')
 HidePath('/.lua/')
 
-ProgramBrand('redbean/x.x.x')
+ProgramBrand(opts.SERVER_BRAND)
 
 ProgramAddr(opts.SERVER_ADDR)
 
@@ -41,11 +42,10 @@ function OnHttpRequest()
     return
   end
 
-
-  if GetCookie(opts.SESSION_ID) and GetCookie(opts.SESSION_SKEY) then
-    session_ctx = re.compile[[^[0-9a-f]{64}$]]:search(GetCookie(opts.SESSION_ID))
+  if GetSession(opts.SESSION_ID) and GetSession(opts.SESSION_SKEY) then
+    session_ctx = re.compile[[^[0-9a-f]{64}$]]:search(GetSession(opts.SESSION_ID))
     sskey = bin2Hex(Curve25519(session_ctx, opts.SESSION_PUBLIC_KEY))
-    uskey = GetCookie(opts.SESSION_SKEY)
+    uskey = GetSession(opts.SESSION_SKEY)
     if sskey == uskey then
       print("EVERYTHING OKAY :)", uskey, sskey)
     else
@@ -57,9 +57,9 @@ function OnHttpRequest()
     -- craft session
     session_ctx = bin2Hex(Sha256(''..GetClientAddr()..Lemur64()..GetTime()))
     session_pubkey = Curve25519(session_ctx, opts.SESSION_PASSPHRASE)
-    session_shared_key = Curve25519(opts.SESSION_SECRET, session_pubkey)
+    session_shared_key = bin2Hex(Curve25519(opts.SESSION_SECRET, session_pubkey))
     SendSession(opts.SESSION_ID, session_ctx)
-    SendSession(opts.SESSION_SKEY, bin2Hex(session_shared_key))
+    SendSession(opts.SESSION_SKEY, session_shared_key)
   end
 
   Route()

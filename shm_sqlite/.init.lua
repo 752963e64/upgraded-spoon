@@ -1,14 +1,26 @@
 -- shm_sqlite .init.lua
 -- author: 752963e64 - 14/11/2024
 
+require 'opts'
+
+if type(opts) == 'table' then
+  -- loads config
+  opts['SERVER_ADDR'] = '127.0.0.1'
+  opts['SERVER_BRAND'] = 'redbean/x.x.x'
+else
+  Log(kLogError, 'missing opts config table...')
+end
+
+require 'strtools'
+
 session = require "Session"
 
 HidePath('/usr/')
 HidePath('/.lua/')
 
-ProgramBrand('redbean/x.x.x')
+ProgramBrand(opts.SERVER_BRAND)
 
-ProgramAddr('127.0.0.1')
+ProgramAddr(opts.SERVER_ADDR)
 
 opts = {
   SESSION_DOMAIN = 'localhost',

@@ -20,7 +20,6 @@ ProgramBrand(opts.SERVER_BRAND)
 
 -- Proxy server listening here
 ProgramAddr(opts.SERVER_ADDR)
--- we'll be reverse proxying to a server running here
 
 RELAY_HEADERS_TO_CLIENT = {
   'Access-Control-Allow-Origin',

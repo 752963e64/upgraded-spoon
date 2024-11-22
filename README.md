@@ -15,6 +15,18 @@ This repo contain R&amp;D around latest redbean.
 
 ```exploring local git repo aggregation in a web browser```
 
+- ./web_static_analysis
+
+```exploring web scraping from server```
+
+- ./skeleton
+
+```The starting frame from all your next proto```
+
+- ./signed_cake_slice
+
+```demo signed session with a cookie combo```
+
 ...
 
 ## redbean's memory

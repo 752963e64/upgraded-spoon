@@ -21,7 +21,7 @@ heartbeat = 0
 
 function OnHttpRequest()
   print('\e[01;36mOnHttpRequest()...\e[0m')
-  Log(kLogError, "fetch failed %s" % {err})
+  Log(kLogError, "hello, world %s" % { FormatIp(GetClientAddr()) })
   ServeError(503)
 end
 

@@ -16,6 +16,8 @@ This repo contain a memory test around the latest redbean.
 
 - why not keep the global scope memory persistent?, so hooks can handle programmaticaly. let me JIT memory myself uh!
 
+- The logic required... to cross boundaries... :D
+
 ## Q/A
 
 - What's memory?

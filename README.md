@@ -27,6 +27,9 @@ This repo contain R&amp;D around latest redbean.
 
 ```demo signed session with a cookie combo or 2 cake slices?```
 
+- ./memory_test
+
+```demo memory handling, simply.```
 ...
 
 ## redbean's memory
@@ -43,5 +46,5 @@ This repo contain R&amp;D around latest redbean.
 
 scraping to end with something else a chimera.
 
-![spoon HoneyBadger](./rzh-ts.asc.png)
+![spoon HoneyBadger](.rzh-ts.asc.png)
 

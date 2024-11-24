@@ -40,6 +40,16 @@ This repo contain R&amp;D around latest redbean.
 
 - memory belong to one connection(one thread) and is garbage collected.
 
+## My HTTP RFC?
+
+2xx - All good
+
+3xx - Somethings could be better
+
+4xx - You did something wrong
+
+5xx - Server did something wrong
+
 ## Q/A
 
 - What's R&amp;D?

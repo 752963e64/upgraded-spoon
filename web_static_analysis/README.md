@@ -6,6 +6,8 @@ This repo contain an webapp to perform static analysis on a given url using the 
 
 - fetch an url and perform static analysis
 
+- redbean's fetch is blocking with overlong timeout...
+
 ...
 
 ## Q/A

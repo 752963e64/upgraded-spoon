@@ -42,6 +42,8 @@ This repo contain R&amp;D around latest redbean.
 
 ## My HTTP RFC?
 
+1xx - Rare novelty response code.
+
 2xx - All good
 
 3xx - Somethings could be better

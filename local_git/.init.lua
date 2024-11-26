@@ -52,11 +52,37 @@ function OnHttpRequest()
 
   SetStatus(200)
   SetHeader('Connection', 'close')
-  Write(page..form)
+  Write(page)
   Write('<br><label for="header">HEADER:</label><br><pre id="header">')
-  Write(Slurp('../.git/logs/HEAD')..'\n')
-  --[[file .git/objects/02/3658702097935ff4cbb74dd63da29a679e6286 
-  .git/objects/02/3658702097935ff4cbb74dd63da29a679e6286: zlib compressed data]]  
+  -- can't believe it just works with ../redbean.zip -D $PWD ... pwd is this path
+  ls = assert(unix.commandv('git'))
+  reader, writer = assert(unix.pipe())
+  if assert(unix.fork()) == 0 then
+     unix.close(1)
+     unix.dup(writer)
+     unix.close(writer)
+     unix.close(reader)
+     unix.execve(ls, {ls, 'log'})
+     unix.exit(127)
+  else
+     unix.close(writer)
+     SetHeader('Content-Type', 'text/plain')
+     while true do
+        data, err = unix.read(reader)
+        if data then
+           if data ~= '' then
+              Write(data)
+           else
+              break
+           end
+        elseif err:errno() ~= EINTR then
+           Log(kLogWarn, tostring(err))
+           break
+        end
+     end
+     assert(unix.close(reader))
+     assert(unix.wait())
+  end
   Write('</pre>')
 end
 

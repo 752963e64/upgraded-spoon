@@ -55,6 +55,7 @@ function OnHttpRequest()
   Write(page)
   Write('<br><label for="header">HEADER:</label><br><pre id="header">')
   -- can't believe it just works with ../redbean.zip -D $PWD ... pwd is this path
+  -- DO NOT PUT THIS AS IS PUBLICLY your machine is gonna smoke :D
   ls = assert(unix.commandv('git'))
   reader, writer = assert(unix.pipe())
   if assert(unix.fork()) == 0 then

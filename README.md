@@ -29,7 +29,7 @@ This repo contain R&amp;D around latest redbean.
 
 - ./memory_test
 
-```demo memory handling, simply.```
+```demo memory handling, why it's 100% useless to play object patterns...```
 ...
 
 ## redbean's memory

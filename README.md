@@ -34,11 +34,15 @@ This repo contain R&amp;D around latest redbean.
 
 ## redbean's memory
 
-- global scope is "persistant" time that you don't fill it from thread cuz memory is accounted to thread and it is garbage collected even if used...
+- memory belong to one connection(one thread)
+
+global scope is "persistant" time that you don't 
+
+fill it from thread cuz memory is accounted to 
+
+thread and it is garbage collected even if used...
 
 - all function hooks shares entire definitions
-
-- memory belong to one connection(one thread) and is garbage collected.
 
 ## My HTTP RFC?
 

@@ -44,6 +44,16 @@ thread and it is garbage collected even if used...
 
 - all function hooks shares entire definitions
 
+## Why it shows no activity...
+
+Really I can't develop program in such way... the same memory initialised at each turn... Is kind of too much for me...
+
+I understand it's an exploitation to perform something... but it's not ideal nor clever nor economic...
+
+It's from the order/lvl of a young animal harassing a lil one with a wood stick.
+
+it's just a toy. It's a cool one when you are not that regarding like me. :D
+
 ## My HTTP RFC?
 
 1xx - Rare novelty response code.

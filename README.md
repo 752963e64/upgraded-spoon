@@ -33,7 +33,8 @@ This repo contain R&amp;D around latest redbean.
 
 - ./repo_hosting
 
-```demo repo hosting... as all request are known by the package manager there is no need a fucking line of code :D
+```
+demo repo hosting... as all request are known by the package manager there is no need a fucking line of code :D
 you get resources as is in bytestream... normal in tls, what else? :D
 ```
 ...

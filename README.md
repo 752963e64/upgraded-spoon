@@ -36,6 +36,7 @@ This repo contain R&amp;D around latest redbean.
 ```
 demo repo hosting... as all request are known by the package manager there is no need a fucking line of code :D
 you get resources as is in bytestream... normal in tls, what else? :D
+there is only one folder inside redbean... /usr the best code is nocoding at all :D
 ```
 ![Yay](https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:tyss4afylclup42sekiy5wma/bafkreia2lw7dmrqle7mpj7n575d7unmlm67gnfrt5asdtf2buzmo4b2354@jpeg)
 ...
@@ -58,9 +59,17 @@ Really I can't develop program in such way... the same memory initialised at eac
 
 I understand it's an exploitation to perform something... but it's not ideal nor clever nor economic...
 
-It's from the order/lvl of a young animal harassing a lil one with a wood stick.
-
 it's just a toy. It's a cool one when you are not that regarding like me. :D
+
+It's just my own opinion... it's done perfectly overal... with just a little problem with memory handling...
+
+Some ppl did devel whole circuitry as framework... that reinitialize at each requests...
+
+I dunno what roam ppl to make such an attemp to make something with such constraint...
+
+It's not really hard to move memory handling outside threading shit...
+
+And from my personal training long ago... I 100% prefere muxing sockets than threading them.
 
 ## My HTTP RFC?
 

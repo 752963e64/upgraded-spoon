@@ -37,6 +37,7 @@ This repo contain R&amp;D around latest redbean.
 demo repo hosting... as all request are known by the package manager there is no need a fucking line of code :D
 you get resources as is in bytestream... normal in tls, what else? :D
 ```
+![Yay](https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:tyss4afylclup42sekiy5wma/bafkreia2lw7dmrqle7mpj7n575d7unmlm67gnfrt5asdtf2buzmo4b2354@jpeg)
 ...
 
 ## redbean's memory

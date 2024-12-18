@@ -71,6 +71,8 @@ It's not really hard to move memory handling outside threading shit...
 
 And from my personal training long ago... I 100% prefere muxing sockets than threading them.
 
+THis tool is so well done that it would be very unfortunate to stand on this limitation... where everything restart with the cost of initialisation.
+
 ## My HTTP RFC?
 
 1xx - Rare novelty response code.

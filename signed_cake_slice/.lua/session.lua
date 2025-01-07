@@ -52,9 +52,8 @@ function GetKeyPairSession(id,skey)
   if GetCookie(id) and GetCookie(skey) then
     return re.compile[[^[0-9a-f]{64}$]]:search(GetCookie(id)),
       re.compile[[^[0-9a-f]{64}$]]:search(GetCookie(skey))
-  else
-    return nil
-  end
+  end  
+  return nil
 end
 
 function ValidateKeyPairSession(id, skey)

@@ -33,11 +33,13 @@ This repo contain R&amp;D around latest redbean.
 
 - ./repo_hosting
 
-```
-demo repo hosting... as all request are known by the package manager there is no need a fucking line of code :D
+Demo repo hosting... as all request are known by the package manager there is no need a fucking line of code :D
 you get resources as is in bytestream... normal in tls, what else? :D
 there is only one folder inside redbean... /usr the best code is nocoding at all :D
-```
+
+Don't forget to add certificates to your clients.
+
+```redbean.zip -d -J -B -C ~/.ssl/ca.crt -K ~/.ssl/.ca.key -% -D /mnt/c -m```
 
 ## redbean's memory
 
